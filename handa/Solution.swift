@@ -75,4 +75,29 @@ class Solution: NSObject {
         }
         return result
     }
+    
+    //MARK: - 461. Hamming Distance
+    func hammingDistance(_ x: Int, _ y: Int) -> Int {
+        var diffent = x ^ y
+        var count = 0
+        while diffent > 0 {
+            if diffent % 2 == 1 {
+                count = count + 1
+            }
+            diffent /= 2
+        }
+        return count
+    }
+    func hammingDistanceBest(_ x: Int, _ y: Int) -> Int {
+        var z = x ^ y
+        var count = 0
+        repeat {
+            if (z >> 1) << 1 != z {
+                count += 1
+                z = z >> 1
+            } else {
+                z = z >> 1
+            }} while z != 0
+        return count
+    }
 }
