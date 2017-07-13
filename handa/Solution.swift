@@ -48,4 +48,31 @@ class Solution: NSObject {
         
         return []
     }
+    
+    //MARK: - 344. Reverse String
+    func reverseString(_ s: String) -> String {
+        var result = ""
+        for character in s.characters.reversed() {
+            result.append(character)
+        }
+        return result
+    }
+    func reverseStringImprove(_ s: String) -> String {
+        var arr = Array(s.characters)
+        let numOfArr = arr.count
+        for index in 0 ..< numOfArr/2 {
+            let char = arr[index]
+            arr[index] = arr[numOfArr - 1 - index]
+            arr[numOfArr - 1 - index] = char
+        }
+        return String(arr)
+    }
+    func reverseStringBest(_ s: String) -> String {
+        let arr = Array(s.characters)
+        var result: String = ""
+        for i in 0 ..< arr.count {
+            result.append(arr[arr.count - 1 - i])
+        }
+        return result
+    }
 }
