@@ -100,4 +100,29 @@ class Solution: NSObject {
             }} while z != 0
         return count
     }
+    //MARK: - 617. Merge Two Binary Trees
+    func mergeTrees(_ t1: TreeNode?, _ t2: TreeNode?) -> TreeNode? {
+        if  t1 != nil && t2 != nil {
+            t1?.val += (t2?.val)!
+        } else if t1 != nil && t2 == nil {
+            return t1
+        } else if t1 == nil && t2 != nil {
+            return t2
+        }
+        t1?.left = self.mergeTrees(t1?.left, t2?.left)
+        t1?.right = self.mergeTrees(t1?.right, t2?.right)
+        return t1
+    }
+    func mergeTreesImprove(_ t1: TreeNode?, _ t2: TreeNode?) -> TreeNode? {
+        if t1 == nil {
+            return t2
+        } else if t2 == nil {
+            return t1
+        } else if t1 != nil && t2 != nil {
+            t1?.val += (t2?.val)!
+        }
+        t1?.left = self.mergeTrees(t1?.left, t2?.left)
+        t1?.right = self.mergeTrees(t1?.right, t2?.right)
+        return t1
+    }
 }
