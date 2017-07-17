@@ -125,4 +125,36 @@ class Solution: NSObject {
         t1?.right = self.mergeTrees(t1?.right, t2?.right)
         return t1
     }
+    
+    //MARK: - 26. Remove Duplicates from Sorted Array
+    func removeDuplicates(_ nums: inout [Int]) -> Int {
+        if nums.count == 0 {
+            return 0
+        }
+        var count = 0
+        for num in nums {
+            if nums[count] != num {
+                nums[count] = num;
+                count += 1
+            } else {
+                
+            }
+        }
+        return count + 1
+    }
+    func removeDuplicatesImprove(_ nums: inout [Int]) -> Int {
+        let total = nums.count
+        if total < 2 {
+            return total;
+        }
+        
+        var count = 0
+        for index in 0 ..< total {
+            if nums[count] != nums[index] {
+                count += 1
+                nums[count] = nums[index];
+            }
+        }
+        return count + 1
+    }
 }
