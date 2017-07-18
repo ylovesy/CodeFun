@@ -157,4 +157,33 @@ class Solution: NSObject {
         }
         return count + 1
     }
+    
+    //MARK: - 283. Move Zeroes
+    func moveZeroes(_ nums: inout [Int]) {
+        let count = nums.count;
+        var zeroIndex = 0;
+        for i in 0 ..< count {
+            if nums[i] != 0 {
+                while nums[zeroIndex] != 0 && zeroIndex < i {
+                    zeroIndex += 1
+                }
+                let tmp = nums[i]
+                nums[i] = nums[zeroIndex]
+                nums[zeroIndex] = tmp
+            }
+        }
+    }
+    func moveZeroesImprove(_ nums: inout [Int]) {
+        var begin = 0
+        var end = 0
+        while end < nums.count {
+            if nums[end] != 0 {
+                let temp = nums[end]
+                nums[end] = nums[begin]
+                nums[begin] = temp
+                begin += 1
+            }
+            end += 1
+        }
+    }
 }
