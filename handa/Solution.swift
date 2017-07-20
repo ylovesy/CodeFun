@@ -186,4 +186,78 @@ class Solution: NSObject {
             end += 1
         }
     }
+    
+    //MARK: - 128. Longest Consecutive Sequence
+    func longestConsecutive(_ nums: [Int]) -> Int {
+        let count = nums.count
+        var best = 0
+        var existDict:[Int:Int] = [:]
+        var visitDict:[Int:Int] = [:]
+        for num in nums {
+            existDict[num] = 1
+        }
+        for num in nums {
+            if visitDict[num] == 1 {
+                continue
+            }
+            visitDict[num] = 1
+            var length = 0
+            for index in 0 ..< count {
+                if existDict[num - index] == 1 {
+                    visitDict[num - index] = 1
+                    length += 1
+                } else {
+                    break;
+                }
+            }
+            best = max(best, length)
+        }
+        return best
+    }
+    func longestConsecutiveBest(_ nums: [Int]) -> Int {
+        let hash = Set(nums)
+        var longestSeqLength = 0
+        for n in nums {
+            if !hash.contains(n - 1) { // First element in sequence
+                var currentSeqLength = 1
+                var m = n + 1
+                while hash.contains(m) { // Check if consecutive numbersa are in hash
+                    currentSeqLength += 1
+                    m += 1
+                }
+                if currentSeqLength > longestSeqLength {
+                    longestSeqLength = currentSeqLength
+                }
+            }
+        }
+        
+        return longestSeqLength
+    }
+    
+    //MARK: - 27. Remove Element
+    func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
+        var i = 0
+        for j in 0 ..< nums.count {
+            if nums[j] != val {
+                nums[i] = nums[j]
+                i += 1
+            }
+        }
+        return i
+    }
+    func removeElementBest(_ nums: inout [Int], _ val: Int) -> Int {
+        var count = 0
+        var i = 0
+        while (i < nums.count) {
+            if (nums[i] == val) {
+                count += 1
+            }
+            else {
+                nums[i - count] = nums[i]
+            }
+            i += 1
+        }
+        return nums.count - count
+    }
+    
 }
