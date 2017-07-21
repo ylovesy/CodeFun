@@ -260,4 +260,64 @@ class Solution: NSObject {
         return nums.count - count
     }
     
+    //MARK: - 3Sum
+    func threeSum(_ nums: [Int]) -> [[Int]] {
+        let count = nums.count
+        if count < 3 {
+            return []
+        }
+        var result:[[Int]] = [];
+        for i in 0 ..< count - 2 {
+            for j in i+1 ..< count - 1 {
+                for k in j+1 ..< count {
+                    if nums[i] + nums[j] + nums[k] == 0 {
+                        var have = false
+                        for var tmp in result {
+                            if tmp.contains(nums[i]) {
+                                tmp.remove(at: tmp.index(of: nums[i])!)
+                                if tmp.contains(nums[j]) {
+                                    have = true
+                                }
+                            }
+                        }
+                        if have == false {
+                            result.append([nums[i],nums[j],nums[k]])
+                        }
+                        
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    func threeSumImprove(_ nums: [Int]) -> [[Int]] {
+        let count = nums.count
+        if count < 3 {
+            return []
+        }
+        let sortedNums = nums.sorted()
+        var result:[[Int]] = [];
+        var dict1:[Int:Int] = [:]
+        for i in 0 ..< count - 2 {
+            if dict1[sortedNums[i]] == 1 {
+                continue
+            }
+            var dict2:[Int:Int] = [:]
+            for j in i+1 ..< count - 1 {
+                for k in j+1 ..< count {
+                    if dict2[sortedNums[k]] == 1 || dict2[sortedNums[j]] == 1{
+                        continue
+                    }
+                    if sortedNums[i] + sortedNums[j] + sortedNums[k] == 0 {
+                        result.append([sortedNums[i],sortedNums[j],sortedNums[k]])
+                        dict2[sortedNums[k]] = 1
+                        dict2[sortedNums[j]] = 1
+                    }
+                }
+            }
+            dict1[sortedNums[i]] = 1
+        }
+        return result;
+    }
+    
 }
