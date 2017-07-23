@@ -13,35 +13,34 @@
 using namespace std;
 
 class ThreeSumSolution {
-public:int longestConsecutive(vector<int>& nums) {
-    if (nums.empty()) {
-        return 0;
+public:vector<vector<int>> threeSum(vector<int>& nums) {
+    vector<vector<int>> resvec;
+    if (nums.size() < 3) {
+        return resvec;
     }
-    int res = 1;
-    set<int> sets;
-    for (int index = 0;index < nums.size(); index++) {
-        sets.insert(nums[index]);
-    }
-    for (int index = 0;index < nums.size(); index++) {
-        int current = nums[index];
-        sets.erase(current);
-        int max = 1;
-        int before = current - 1;
-        int behand = current + 1;
-        while (sets.find(before) != sets.end()) {
-            sets.erase(before);
-            max++;
-            before = before - 1;
+    sort(nums.begin(), nums.end());
+    for (int i = 0; i < nums.size() - 2; i++) {
+        for (int j = i + 1; j < nums.size() - 1; j++) {
+            for (int k = j + 1; k < nums.size(); k++) {
+                if (nums[i] + nums[j] + nums[k] == 0) {
+                    vector<int> vec;
+                    vec.push_back(nums[i]);
+                    vec.push_back(nums[j]);
+                    vec.push_back(nums[k]);
+                    resvec.push_back(vec);
+                }
+                while (nums[k] == nums[k + 1]) {
+                    k++;
+                }
+            }
+            while (nums[j] == nums[j + 1]) {
+                j++;
+            }
         }
-        while (sets.find(behand) != sets.end()) {
-            sets.erase(behand);
-            max++;
-            behand = behand + 1;
-        }
-        if (max > res) {
-            res = max;
+        while (nums[i] == nums[i + 1]) {
+            i++;
         }
     }
-    return res;
+    return resvec;
 }
 };
