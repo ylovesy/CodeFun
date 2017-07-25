@@ -379,5 +379,69 @@ class Solution: NSObject {
         }
         return max(max1*max2*max3, max1*min1*min2);
     }
+    //MARK: - 17. Letter Combinations of a Phone Number
+    func letterCombinations(_ digits: String) -> [String] {
+        if digits.characters.count == 0 {
+            return []
+        }
+        let lettersOfNums : [Character : [String]] = ["1":[],
+                                                      "2":["a", "b", "c"],
+                                                      "3":["d", "e", "f"],
+                                                      "4":["g", "h", "i"],
+                                                      "5":["j", "k", "l"],
+                                                      "6":["m", "n", "o"],
+                                                      "7":["p", "q", "r", "s"],
+                                                      "8":["t", "u", "v"],
+                                                      "9":["w", "x", "y", "z"]]
+        
+        let characters = [Character](digits.characters)
+        guard characters.count > 0 else {
+            return []
+        }
+        
+        var combinations : [String] = []
+        for digit in characters {
+            guard let letters = lettersOfNums[digit] else {
+                return []
+            }
+            guard combinations.count > 0 else {
+                combinations = letters
+                continue
+            }
+            
+            var nextCombinations : [String] = []
+            for combination in combinations {
+                for letter in letters {
+                    nextCombinations.append(combination + letter)
+                }
+            }
+            
+            combinations = nextCombinations
+        }
+        
+        return combinations
+    }
+    func letterCombinationsBest(_ digits: String) -> [String] {
+        guard !digits.isEmpty else {
+            return []
+        }
+        let digitToLetters = [[""],[""],["a","b","c"],["d","e","f"],["g","h","i"],["j","k","l"],["m","n","o"],["p","q","r","s"],["t","u","v"],["w","x","y","z"]]
+        
+        var originalCombinations: [String] = [""]
+        
+        for digit in digits.characters {
+            var newCombinations: [String] = []
+            for letter in digitToLetters[Int(String(digit))!] {
+                for combination in originalCombinations {
+                    newCombinations.append(combination+letter)
+                }
+            }
+            
+            originalCombinations = newCombinations
+        }
+        
+        return originalCombinations
+    }
+    
     
 }
