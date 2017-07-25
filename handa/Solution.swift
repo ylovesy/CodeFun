@@ -320,4 +320,64 @@ class Solution: NSObject {
         return result;
     }
     
+    //MARK: - 628 Maximum Product of Three Numbers
+    func maximumProduct(_ nums: [Int]) -> Int {
+        let count = nums.count
+        if count < 3{
+            return 0
+        }
+        let sortedNums = Array(nums.sorted().reversed())
+        if sortedNums[count-1] > 0 || sortedNums[0] < 0 {
+            return sortedNums[0] * sortedNums[1] * sortedNums[2]
+        } else if (sortedNums[count-1] < 0 && sortedNums[count - 2] < 0) {
+            let num1 = sortedNums[0] * sortedNums[1] * sortedNums[2]
+            let num2 = sortedNums[0] * sortedNums[count-1] * sortedNums[count - 2]
+            return num1 > num2 ? num1 : num2
+        }
+        return 0
+    }
+    func maximumProductImprove(_ nums: [Int]) -> Int {
+        let count = nums.count
+        if count < 3{
+            return 0
+        }
+        let sortedNums = nums.sorted()
+        let num1 = sortedNums[0] * sortedNums[1] * sortedNums[count - 1]
+        let num2 = sortedNums[count - 3] * sortedNums[count-1] * sortedNums[count - 2]
+        return num1 > num2 ? num1 : num2
+    }
+    func maximumProductBest(_ nums: [Int]) -> Int {
+        let count = nums.count
+        if count < 3{
+            return 0
+        }
+        var min1 = Int.max
+        var min2 = Int.max
+        var max1 = Int.min
+        var max2 = Int.min
+        var max3 = Int.min
+        
+        for n in nums {
+            
+            if n > max1 {
+                max3 = max2
+                max2 = max1
+                max1 = n
+            } else if n > max2 {
+                max3 = max2
+                max2 = n
+            } else if n > max3 {
+                max3 = n
+            }
+            
+            if n < min1 {
+                min2 = min1
+                min1 = n
+            } else if n < min2 {
+                min2 = n
+            }
+        }
+        return max(max1*max2*max3, max1*min1*min2);
+    }
+    
 }
