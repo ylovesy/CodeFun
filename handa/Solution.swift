@@ -442,6 +442,31 @@ class Solution: NSObject {
         
         return originalCombinations
     }
-    
+    //MARK: - 637. Average of Levels in Binary Tree
+    //TODO: 有问题
+    func averageOfLevels(_ root: TreeNode?) -> [Double] {
+        var result:[Double] = []
+        var tmpQueue:[TreeNode?] = []
+        tmpQueue.append(root)
+        while !tmpQueue.isEmpty {
+            var sum = 0
+            var count = 0
+            var tmp:[TreeNode?] = []
+            while !tmpQueue.isEmpty {
+                let node = tmpQueue.removeFirst()
+                sum += node!.val
+                count += 1
+                if node!.left != nil {
+                    tmp.append(node!.left)
+                }
+                if node!.right != nil {
+                    tmp.append(node!.right)
+                }
+            }
+            tmpQueue = tmp;
+            result.append(Double(sum) / Double(count));
+        }
+        return result
+    }
     
 }
