@@ -13,29 +13,18 @@
 # The average value of nodes on level 0 is 3,  on level 1 is 14.5, and on level 2 is 11. Hence return [3, 14.5, 11].
 # Note:
 # The range of node's value is in the range of 32-bit signed integer.
+
+
+class TreeNode
+    attr_accessor :val, :left, :right
+    def initialize(val)
+        @val = val
+        @left, @right = nil, nil
+    end
+end
 ###使用层级遍历解决问题
 
-class Node
- def initialize(value,left,right)
-     @value = value
-     @left = left
-     @right = right
- end
-
- def value
-    @value
- end
-
- def left
-    @left
- end
-
- def right
-    @right
- end
-end
-
-def findTreeAverage(root)
+def average_of_levels(root)
     nodeList = Array.new
     resultList = Array.new
     nodeList.push(root)
@@ -43,7 +32,7 @@ def findTreeAverage(root)
         sum = 0.0
         temList = Array.new
         nodeList.each do |node|
-            sum += node.value
+            sum += node.val
             if node.left
                 temList.push(node.left)
             end
@@ -59,12 +48,16 @@ def findTreeAverage(root)
 end
 
 
+
+
 ####test
-
-node1 = Node.new(15,nil,nil)
-node2 = Node.new(7,nil,nil)
-node3 = Node.new(20,node1,node2)
-node4 = Node.new(9,nil,nil)
-root  = Node.new(3,node4,node3)
-
-findTreeAverage(root)
+node1 = TreeNode.new(15)
+node2 = TreeNode.new(7)
+node3 = TreeNode.new(20)
+node3.left = node1
+node3.right = node2
+node4 = TreeNode.new(9)
+root  = TreeNode.new(3)
+root.left = node4
+root.right = node3
+average_of_levels(root)
