@@ -468,5 +468,45 @@ class Solution: NSObject {
         }
         return result
     }
+    //MARK: - 383. Ransom Note
+    func canConstruct(_ ransomNote: String, _ magazine: String) -> Bool {
+        var dict:[Character:Int] = [:];
+        for character in magazine.characters {
+            if let count = dict[character] {
+                dict[character] = count + 1
+            } else {
+                dict[character] = 1
+            }
+        }
+        for character in ransomNote.characters {
+            if let count = dict[character] {
+                if count > 0 {
+                    dict[character] = count - 1
+                } else {
+                    return false
+                }
+            } else {
+                return false
+            }
+        }
+        return true;
+    }
+    func canConstructBest(_ ransomNote: String, _ magazine: String) -> Bool {
+        var result : Array<Int> = Array(repeating:0, count: 26)
+        for character in magazine.characters {
+            let index1 = (String(character).unicodeScalars.first?.value)!
+            let index2 = ("a".unicodeScalars.first?.value)!
+            
+            result[Int(index1) - Int(index2)] += 1
+        }
+        for character in ransomNote.characters {
+            let index = (String(character).unicodeScalars.first?.value)! - ("a".unicodeScalars.first?.value)!
+            if  result[Int(index)] == 0 {
+                return false
+            }
+            result[Int(index) ] -= 1
+        }
+        return true
+    }
     
 }
