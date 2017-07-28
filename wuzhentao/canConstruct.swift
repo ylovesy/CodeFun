@@ -1,6 +1,5 @@
 class Solution {
     func canConstruct(_ ransomNote: String, _ magazine: String) -> Bool {
-        var map : [Character : Int] = [Character : Int]()
         var collections: [Character: Int] = [:]
         
         for ch in magazine.characters {
