@@ -508,5 +508,45 @@ class Solution: NSObject {
         }
         return true
     }
+    //MARK: - 350. Intersection of Two Arrays II
+    func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        var result:[Int] = []
+        var dict:[Int: Int] = [:]
+        for num in nums1 {
+            if let count = dict[num] {
+                dict[num] = count + 1
+            } else {
+                dict[num] = 1
+            }
+        }
+        for num in nums2 {
+            if let count = dict[num] {
+                if count > 0 {
+                    dict[num] = count - 1
+                    result.append(num)
+                }
+            }
+        }
+        return result
+    }
+    func intersectBest(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        var dict = [Int: Int]()
+        for i in nums1 {
+            if dict[i] != nil {
+                dict[i] = dict[i]! + 1
+            } else {
+                dict[i] = 1
+            }
+        }
+        var res: [Int] = []
+        for i in nums2 {
+            if dict[i] != nil && dict[i]! > 0 {
+                dict[i] = dict[i]! - 1
+                res.append(i)
+            }
+        }
+        return res
+    }
+    
     
 }
