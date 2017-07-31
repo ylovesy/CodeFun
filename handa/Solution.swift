@@ -547,6 +547,13 @@ class Solution: NSObject {
         }
         return res
     }
-    
+    //MARK: - 136. Single Number
+    func singleNumber(_ nums: [Int]) -> Int {
+        var result = 0
+        for num in nums {
+            result ^= num
+        }
+        return result
+    }
     
 }
