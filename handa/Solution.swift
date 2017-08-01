@@ -555,5 +555,51 @@ class Solution: NSObject {
         }
         return result
     }
+    //MARK: - 4Sum
+    func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
+        let count = nums.count
+        if count < 4 {
+            return []
+        }
+        var result:[[Int]] = []
+        let sorterNums = nums.sorted()
+        for i in 0 ..< count-3 {
+            if i > 0 && sorterNums[i] == sorterNums[i - 1] {
+                continue
+            } else if sorterNums[i] + sorterNums[count - 1] + sorterNums[count - 2] + sorterNums[count - 3] < target {
+                continue
+            } else if (sorterNums[i] + sorterNums[i + 1] + sorterNums[i + 2] + sorterNums[i + 3] > target) {
+                break
+            }
+            for j in i+1 ..< count-2 {
+                if j > i + 1 && sorterNums[j] == sorterNums[j - 1] {
+                    continue
+                } else if (sorterNums[i] + sorterNums[j] + sorterNums[count - 1] + sorterNums[count - 2] < target) {
+                    continue
+                } else if (sorterNums[i] + sorterNums[j] + sorterNums[j + 1] + sorterNums[j+2] > target){
+                    break
+                }
+                var left = j + 1
+                var right = count - 1
+                while left < right {
+                    let sum = sorterNums[left] + sorterNums[right] + sorterNums[i] + sorterNums[j]
+                    if sum < target {
+                        left += 1
+                    } else if sum > target {
+                        right -= 1
+                    } else {
+                        result.append([sorterNums[i],sorterNums[j],sorterNums[left],sorterNums[right]])
+                        repeat {
+                            left += 1
+                        }while(sorterNums[left] == sorterNums[left - 1] && left < right)
+                        repeat {
+                            right -= 1
+                        }while(sorterNums[right] == sorterNums[right + 1] && left < right)
+                    }
+                }
+            }
+        }
+        return result
+    }
     
 }
