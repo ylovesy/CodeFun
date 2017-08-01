@@ -34,14 +34,7 @@ private class Solution {
         ary = ary.map{$0.sorted()}
         var resAry = [[Int]]()
         for val in ary {
-            var isContains = false
-            for ary in resAry {
-                if ary ==  val{
-                    isContains = true
-                    break
-                }
-            }
-            if !isContains {
+            if !resAry.contains(where: { $0 == val}) {
                 resAry.append(val)
             }
         }
