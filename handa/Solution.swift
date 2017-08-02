@@ -601,5 +601,17 @@ class Solution: NSObject {
         }
         return result
     }
-    
+    //MARK: - 168. Excel Sheet Column Title
+    func convertToTitle(_ n: Int) -> String {
+        var num = n
+        var result:String = ""
+        let ascIIA = 65
+        repeat {
+            let remainder = (num - 1) % 26
+            let char = Character(UnicodeScalar(remainder + ascIIA)!)
+            result = String(char) + result
+            num = (num - 1)/26
+        } while num >= 1
+        return result
+    }
 }
