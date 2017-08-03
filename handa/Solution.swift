@@ -614,4 +614,43 @@ class Solution: NSObject {
         } while num >= 1
         return result
     }
+    //MARK - 148. Sort List
+    func sortList(_ head: ListNode?) -> ListNode? {
+        if head == nil {
+            return nil
+        }
+        if head?.next == nil {
+            return head
+        }
+        var prev = head, slow = head, fast = head
+        while fast != nil, fast?.next != nil {
+            prev = slow
+            slow = slow?.next
+            fast = fast?.next?.next
+        }
+        prev?.next = nil
+        
+        let firstHalf = sortList(head)
+        let secondHalf = sortList(slow)
+        return mergeTwoLists(firstHalf, secondHalf)
+    }
+    
+    private func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        let result = ListNode(0)
+        var head = result
+        var l1 = l1
+        var l2 = l2
+        while l1 != nil, l2 != nil {
+            if l1!.val < l2!.val {
+                head.next = l1
+                l1 = l1?.next
+            } else {
+                head.next = l2
+                l2 = l2?.next
+            }
+            head = head.next!
+        }
+        head.next = l1 != nil ? l1 : l2
+        return result.next
+    }
 }
