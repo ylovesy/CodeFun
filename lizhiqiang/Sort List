@@ -1,23 +1,47 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {
-        
+        if(head == NULL || head->next == NULL) {  
+            return head;
+        }
+        ListNode *middle = getMiddleOfList(head);
+        ListNode *next = middle->next;
+        middle->next = NULL;
+        return merge(sortList(head), sortList(next));
     }
-    
+
+    ListNode* getMiddleOfList(ListNode* head) {  
+        ListNode *slow = head;  
+        ListNode *fast = head;  
+        while(fast->next != NULL && fast->next->next != NULL) {  
+            slow = slow->next;  
+            fast = fast->next->next;  
+        }  
+        return slow;  
+    }
+
     ListNode* merge(ListNode *firstListHead, ListNode *secondListHead) {
         ListNode *temp = new ListNode(0);
         ListNode *current = temp;
         while (firstListHead != NULL && secondListHead != NULL) {
-            if(firstListHead.val<=b.val) {  
-                current.next = firstListHead;
-                firstListHead = firstListHead.next;  
+            if(firstListHead->val <= secondListHead->val) {  
+                current->next = firstListHead;
+                firstListHead = firstListHead->next;  
             } else {  
-                current.next = secondListHead;
-                secondListHead = secondListHead.next;  
+                current->next = secondListHead;
+                secondListHead = secondListHead->next;  
             }  
-            current = current.next;  
+            current = current->next;  
         }
-        current.next = firstListHead != NULL ? firstListHead : secondListHead;  
-        return temp.next;  
+        current->next = firstListHead != NULL ? firstListHead : secondListHead;  
+        return temp->next;  
     }
 };
