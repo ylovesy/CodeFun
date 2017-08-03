@@ -1,0 +1,23 @@
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        
+    }
+    
+    ListNode* merge(ListNode *firstListHead, ListNode *secondListHead) {
+        ListNode *temp = new ListNode(0);
+        ListNode *current = temp;
+        while (firstListHead != NULL && secondListHead != NULL) {
+            if(firstListHead.val<=b.val) {  
+                current.next = firstListHead;
+                firstListHead = firstListHead.next;  
+            } else {  
+                current.next = secondListHead;
+                secondListHead = secondListHead.next;  
+            }  
+            current = current.next;  
+        }
+        current.next = firstListHead != NULL ? firstListHead : secondListHead;  
+        return temp.next;  
+    }
+};
