@@ -653,4 +653,22 @@ class Solution: NSObject {
         head.next = l1 != nil ? l1 : l2
         return result.next
     }
+    //MARK - 231. Power of Two
+    func isPowerOfTwo(_ n: Int) -> Bool {
+        return n > 0 && (n & (n - 1) == 0)
+    }
+    func isPowerOfTwoBest(_ n: Int) -> Bool {
+        var n = n
+        while n > 0 {
+            if n == 1 {
+                return true
+            }
+            if n > 2 && n % 2 == 1 {
+                return false
+            }
+            n /= 2
+        }
+        
+        return false
+    }
 }
