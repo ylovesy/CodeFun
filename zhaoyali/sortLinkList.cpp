@@ -18,31 +18,44 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 class Solution {
-public:
+private:
+    /*
+     * 合并有序数组也是类似的思路
+     * 这里注意对指针的操作，C中对NUll->next是不合法的
+     */
     ListNode * mergeList(ListNode *l1, ListNode *l2) {
         if (!l1 && !l2) return NULL;
-        ListNode *res = new ListNode(0);
+        
+        //这里因为只有内部的sortList方法调用，此时l1和l2已经是有序了，不用再判断是否有序，如果移动到别处使用就要考虑是否需要判断是否有序的性质
+        
+        
+        ListNode *res = new ListNode(0);//创建自己的节点方便开始link list
+        ListNode *temp = res;//link list的最后节点
         while (l1 && l2) {
             if (l1->val < l2->val) {
-                res->next = l1;
+                temp->next = l1;
                 l1 = l1->next;
             } else {
-                res->next = l2;
+                temp->next = l2;
                 l2 = l2->next;
             }
+            temp = temp->next;//更新最后节点的指针
         }
-        //比较完之后可能有一个有剩余
+        //比较完之后可能其中一个list有剩余
         while (l1) {
-            res->next = l1;
+            temp->next = l1;
             l1 = l1->next;
+            temp = temp->next;
         }
         while (l2) {
-            res->next = l2;
+            temp->next = l2;
             l2 = l2->next;
+            temp = temp->next;
         }
-        return res->next;
+        return res->next;//最后返回新link list的第二节点指针
     }
     
+public:
     
     ListNode* sortList(ListNode* head) {
         if ( !head || !head->next) return head;
@@ -51,10 +64,10 @@ public:
         ListNode *pre = NULL;
         ListNode *slow = head;
         ListNode *fast = head;
-        while (!fast || !fast->next) {
+        while (fast && fast->next) {
             pre = slow;
             slow = slow->next;
-            fast = fast->next->next;
+            fast = fast->next->next;//条件保证fast->next为真，null->next不允许，给空指针发消息会crash不同于OC
         }
         //找到中间值之后断掉，变成两个link list
         pre->next = NULL;
@@ -66,22 +79,3 @@ public:
         return res;
     }
 };
-/*
- if (slow->next) {
- slow = slow->next;
- } else {
- break;
- }
- 
- if (fast->next) {
- fast = fast->next;
- if (fast ->next) {
- fast = fast->next;
- } else {
- break;
- }
- } else {
- break;
- }
-
- */
