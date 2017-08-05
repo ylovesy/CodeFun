@@ -1,0 +1,53 @@
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> result;
+        result.push_back("");
+        for (int i = 0; i < digits.length(); i++) {
+            string charSet;
+            int digit = digits[i] - 48;
+            switch(digit) {
+                case 2:
+                    charSet = "abc";
+                    break;
+                case 3:
+                    charSet = "def";
+                    break;
+                case 4:
+                    charSet = "ghi";
+                    break;
+                case 5:
+                    charSet = "jkl";
+                    break;
+                case 6:
+                    charSet = "mno";
+                    break;
+                case 7:
+                    charSet = "pqrs";
+                    break;
+                case 8:
+                    charSet = "tuv";
+                    break;
+                case 9:
+                    charSet = "wxyz";
+                    break;
+                default:
+                    break;
+            }
+            int resultLen = result.size();
+            for (int j = 0; j < resultLen; j++) {
+                string str = result[j];
+                for (int q = 0; q < charSet.length(); q++) {
+                    result.push_back(str + charSet[q]);
+                }
+            }
+        }
+        vector<string> finalResult;
+        for (string str : result) {
+            if(str.length() == digits.length() && str.length() > 0) {
+                finalResult.push_back(str);
+            }
+        }
+        return finalResult;
+    }
+};
