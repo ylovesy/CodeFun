@@ -671,4 +671,40 @@ class Solution: NSObject {
         
         return false
     }
+    //MARK - 43. Multiply Strings
+    func multiply(_ num1: String, _ num2: String) -> String {
+        if num1 == "0" || num2 == "0" {
+            return "0"
+        }
+        var n1:[Int] = num1.characters.map { (character) -> Int in
+            return Int("\(character)")!
+        }
+        var n2:[Int] = num2.characters.map { (character) -> Int in
+            return Int("\(character)")!
+        }
+        n1 = n1.reversed()
+        n2 = n2.reversed()
+        var n:[Int] = Array(repeating: 0, count: n1.count+n2.count)
+        //将相乘的结果保存，不考虑进位问题
+        for i in 0 ..< n1.count {
+            for j in 0 ..< n2.count {
+                //n一定是i+j，因为每次变动都要补一位0
+                n[i+j] = n[i+j] + n1[i]*n2[j];//不考虑进位，最后统一处理进位问题
+            }
+        }
+        var k = 0;//进位
+        var result = "";
+        for i in 0 ..< n.count {
+            n[i] = n[i] + k;//先加进位
+            k = n[i]/10;//下个进位
+            n[i] = n[i]%10;//余数
+            result = n[i].description + result;//将结果逆序保存
+        }
+        let regex = try! NSRegularExpression(pattern: "^0*", options: NSRegularExpression.Options(rawValue:0))
+        let match = regex.firstMatch(in: result, options: NSRegularExpression.MatchingOptions.anchored, range:  NSMakeRange(0, result.characters.count))
+        if (match != nil) {
+            result = (result as NSString).replacingCharacters(in: (match?.range)!, with: "")
+        }
+        return result;
+    }
 }
