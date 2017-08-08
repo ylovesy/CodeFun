@@ -701,10 +701,61 @@ class Solution: NSObject {
             result = n[i].description + result;//将结果逆序保存
         }
         let regex = try! NSRegularExpression(pattern: "^0*", options: NSRegularExpression.Options(rawValue:0))
-        let match = regex.firstMatch(in: result, options: NSRegularExpression.MatchingOptions.anchored, range:  NSMakeRange(0, result.characters.count))
-        if (match != nil) {
-            result = (result as NSString).replacingCharacters(in: (match?.range)!, with: "")
+        let matchs = regex.matches(in: result, options: .anchored, range: NSMakeRange(0, result.characters.count))
+//        let match = regex.firstMatch(in: result, options: NSRegularExpression.MatchingOptions.anchored, range:  NSMakeRange(0, result.characters.count))
+        for match in matchs {
+            result = (result as NSString).replacingCharacters(in: match.range, with: "")
         }
         return result;
+    }
+    //MARK - 322. Coin Change
+    func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+        if amount == 0 {
+            return 0
+        }
+        let len = coins.count
+        var nums:[Int] = Array.init(repeating: 0, count: amount + 1)
+        nums[0] = 0
+        for i in 0 ... amount {
+            nums[i] = Int.max - 1
+        }
+        for i in 0 ..< len {
+            if coins[i] <= amount {
+                nums[coins[i]] = 1
+            }
+        }
+        for i in 0 ..< len {
+            for j in 0 ... amount {
+                if j >= coins[i] && nums[j-coins[i]] >= 0 {
+                    nums[j] = min(nums[j], nums[j-coins[i]] + 1)
+                }
+            }
+        }
+        if nums[amount] >= Int.max - 1 {
+            return -1
+        } else {
+            return nums[amount]
+        }
+    }
+    func coinChangeBest(_ coins: [Int], _ amount: Int) -> Int {
+        if amount == 0 {
+            return 0
+        }
+        let arrayLength = amount + 1
+        // Since later we add 1 to the array, we need to subtract 1 so that a runtime overflow error doesn't occur
+        var arr = [Int](repeating: Int.max-1, count: arrayLength)
+        arr[0] = 0
+        for x in 1...amount {
+            for c in coins {
+                if c <= x {
+                    let currentValue = arr[x]
+                    let newValue = arr[x-c] + 1
+                    if currentValue > newValue {
+                        arr[x] = newValue
+                    }
+                }
+            }
+        }
+        return arr[amount] > amount ? -1 : arr[amount]
     }
 }
