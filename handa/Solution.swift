@@ -614,7 +614,7 @@ class Solution: NSObject {
         } while num >= 1
         return result
     }
-    //MARK - 148. Sort List
+    //MARK: - 148. Sort List
     func sortList(_ head: ListNode?) -> ListNode? {
         if head == nil {
             return nil
@@ -653,7 +653,7 @@ class Solution: NSObject {
         head.next = l1 != nil ? l1 : l2
         return result.next
     }
-    //MARK - 231. Power of Two
+    //MARK: - 231. Power of Two
     func isPowerOfTwo(_ n: Int) -> Bool {
         return n > 0 && (n & (n - 1) == 0)
     }
@@ -671,7 +671,7 @@ class Solution: NSObject {
         
         return false
     }
-    //MARK - 43. Multiply Strings
+    //MARK: - 43. Multiply Strings
     func multiply(_ num1: String, _ num2: String) -> String {
         if num1 == "0" || num2 == "0" {
             return "0"
@@ -708,17 +708,13 @@ class Solution: NSObject {
         }
         return result;
     }
-    //MARK - 322. Coin Change
+    //MARK: - 322. Coin Change
     func coinChange(_ coins: [Int], _ amount: Int) -> Int {
         if amount == 0 {
             return 0
         }
         let len = coins.count
-        var nums:[Int] = Array.init(repeating: 0, count: amount + 1)
-        nums[0] = 0
-        for i in 0 ... amount {
-            nums[i] = Int.max - 1
-        }
+        var nums:[Int] = Array.init(repeating: Int.max - 1, count: amount + 1)
         for i in 0 ..< len {
             if coins[i] <= amount {
                 nums[coins[i]] = 1
@@ -758,4 +754,27 @@ class Solution: NSObject {
         }
         return arr[amount] > amount ? -1 : arr[amount]
     }
+    //MARK: - 48. Rotate Image
+    func rotate(_ matrix: inout [[Int]]) {
+        let count = matrix.count
+        for i in 0 ..< count/2 {
+            for j in i ..< count - i - 1 {
+                let tmp = matrix[i][j]
+                matrix[i][j] = matrix[count - 1 - j][i]
+                matrix[count - 1 - j][i] = matrix[count - 1 - i][count - 1 - j]
+                matrix[count - 1 - i][count - 1 - j] = matrix[j][count - 1 - i]
+                matrix[j][count - 1 - i] = tmp;
+            }
+        }
+    }
+    func rotateBest(_ matrix: inout [[Int]]) {
+        matrix.reverse()
+        for i in 0 ..< matrix.count {
+            for j in (i + 1) ..< matrix[i].count {
+                (matrix[i][j], matrix[j][i]) = (matrix[j][i], matrix[i][j])
+            }
+        }
+    }
+    
+    
 }
