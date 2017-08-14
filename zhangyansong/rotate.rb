@@ -26,3 +26,24 @@ matrix =  [[1,2],[3,4]]
 
 rotate(matrix)
 puts matrix;
+
+
+def rotate(img)
+ len = img.length - 1
+      num_rotate = (len / 2)
+      runner = img.length  - 2
+      (0..num_rotate).each do |r|
+        (0..runner).each do |i|
+          fouth   = img[len - i - r][r]
+          first   = img[r][i + r]
+          img[r][i + r] = fouth
+          second  = img[i + r][len - r]
+          img[i + r][len - r] = first
+          third   = img[len - r][len - i - r]
+          img[len -  r][len - i - r] = second
+          img[len - i - r ][ r] = third
+        end
+        runner  = runner - 2
+      end
+      img
+end
