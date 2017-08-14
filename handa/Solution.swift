@@ -775,6 +775,74 @@ class Solution: NSObject {
             }
         }
     }
+    //Mark: - 79. Word Search
+    func exist(_ board: [[Character]], _ word: String) -> Bool {
+        let count = board.count
+        for i in 0 ..< count {
+            for j in 0 ..< count {
+                if exist(board,i,j,word,0) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    func exist(_ board: [[Character]], _ x:Int,_ y :Int,_ word:String, _ index: Int) -> Bool {
+        var tmpBoard = board;
+        if index == word.characters.count {
+            return true
+        }
+        var i = 0
+        var character:Character
+        for char in word.characters {
+            if index == i  {
+                character = char;
+            }
+            i += 1
+        }
+//        if x < 0 || y < 0 || x >= tmpBoard.count || y >= tmpBoard[0].count || tmpBoard[x][y] != character{
+//            return false
+//        }
+//        tmpBoard[x][y] ^= 128
+        let exist = self.exist(tmpBoard,x-1,y,word,index+1) || self.exist(tmpBoard, x+1, y, word, index+1) || self.exist(tmpBoard, x, y-1, word, index+1) || self.exist(tmpBoard, x, y + 1, word, index+1)
+//        tmpBoard[x][y] ^= 128
+        return exist;
+    }
+    //MARK: - 307. Range Sum Query - Mutable
+    //MARK: - 48. Find All Numbers Disappeared in an Array
+    func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
+        var dict:[Int:Int] = Dictionary.init(minimumCapacity: nums.count + 1)
+        for num in nums {
+            dict[num] = 1
+        }
+        var result:[Int] = []
+        for i in 1 ..< nums.count + 1 {
+            if dict[i] != 1 {
+                result.append(i)
+            }
+        }
+        return result
+    }
+    func findDisappearedNumbersBest(_ nums: [Int]) -> [Int] {
+        var nums = nums
+        var dissapearedNumbers = [Int]()
+        
+        for i in 0..<nums.count {
+            let value = abs(nums[i]) - 1
+            
+            if nums[value] > 0 {
+                nums[value] = -nums[value]
+            }
+        }
+        
+        for i in 0..<nums.count {
+            if nums[i] > 0 {
+                dissapearedNumbers.append(i + 1)
+            }
+        }
+        
+        return dissapearedNumbers
+    }
     
     
 }
