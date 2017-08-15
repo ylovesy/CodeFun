@@ -843,6 +843,47 @@ class Solution: NSObject {
         
         return dissapearedNumbers
     }
+    //MARK: - 110. Balanced Binary Tree
+    func isBalanced(_ root: TreeNode?) -> Bool {
+        if root == nil {
+            return true
+        }
+        let left = findHeight(root?.left)
+        let right = findHeight(root?.right)
+        if left != -1 && right != -1 && abs(left - right) <= 1 {
+            return true
+        }
+        return false
+        
+        
+    }
+    func findHeight(_ node: TreeNode?) -> Int {
+        if node == nil {
+            return 0
+        }
+        let left = findHeight(node?.left)
+        let right = findHeight(node?.right)
+        if left == -1 || right == -1 || abs(left - right) > 1 {
+            return -1
+        }
+        return max(left, right) + 1
+    }
+    func isBalancedBest(_ root: TreeNode?) -> Bool {
+        return heightBalanced(root) != -1
+    }
     
+    func heightBalanced(_ root: TreeNode?) -> Int {
+        if let r = root {
+            let leftHeight = heightBalanced(r.left)
+            let rightHeight = heightBalanced(r.right)
+            if leftHeight >= 0 && rightHeight >= 0 && abs(leftHeight - rightHeight) <= 1 {
+                return max(leftHeight, rightHeight) + 1
+            } else {
+                return -1
+            }
+        } else {
+            return 0
+        }
+    }
     
 }
