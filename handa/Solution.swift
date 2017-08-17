@@ -885,5 +885,37 @@ class Solution: NSObject {
             return 0
         }
     }
+    //MARK: - 583. Delete Operation for Two Strings
+    //超时
+    func minDistance(_ word1: String, _ word2: String) -> Int {
+        let m = word1.characters.count
+        let n = word2.characters.count
+        if m == 0 && n == 0 {
+            return 0
+        } else if  m == 0 && n != 0 {
+            return n
+        } else if n == 0 && m != 0 {
+            return m
+        }
+        var arr:[[Int]] = Array.init(repeating: Array.init(repeating: 0, count: n+1), count: m+1)
+        for i in 1 ... m {
+            arr[i][0] = i
+        }
+        for j in 1 ... n {
+            arr[0][j] = j
+        }
+        for i in 1 ... m {
+            for j in 1 ... n {
+                let indexi = word1.index(word1.startIndex, offsetBy: i - 1)
+                let indexj = word2.index(word2.startIndex, offsetBy: j - 1)
+                if word1[indexi] == word2[indexj] {
+                    arr[i][j] = arr[i - 1][j - 1]
+                } else {
+                    arr[i][j] = min(arr[i - 1][j], arr[i][j - 1]) + 1
+                }
+            }
+        }
+        return arr[m][n]
+    }
     
 }
