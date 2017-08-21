@@ -917,5 +917,15 @@ class Solution: NSObject {
         }
         return arr[m][n]
     }
+    //MARK: - 191. Number of 1 Bits
+    func hammingWeight(_ n: Int) -> Int{
+        var count = 0
+        var n = n
+        while (n > 0) {
+            count += 1
+            n = n & (n - 1)
+        }
+        return count;
+    }
     
 }
