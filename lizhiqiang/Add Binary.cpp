@@ -33,3 +33,71 @@ public:
               
     }  
 };  
+
+
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string result;
+        int lenA = a.size();
+        int lenB = b.size();
+        if (lenA == 0 || lenB == 0) {
+            return lenA == 0 ? b : a;
+        }
+        int posA = lenA--;
+        int posB = lenB--;
+        int flag = 0;
+        while (posA >= 0 && posB >= 0) {
+            if (a[posA] == '1' && b[posB] == '1') {
+                if (flag) {
+                    result.push_back('1');
+                } else {
+                    result.push_back('0');
+                    flag = 1;
+                }
+            } else if (a[posA] == '1' || b[posB] == '1') {
+                if (flag) {
+                    result.push_back('0');
+                } else {
+                    result.push_back('1');
+                }
+            } else {
+                if (flag) {
+                    result.push_back('1');
+                    flag = 0;
+                } else {
+                    result.push_back('0');
+                }
+            }
+            posA--;posB--;
+        }
+            while (posA >= 0) {
+                if (a[posA] == '1' && flag == 1) {
+                    result.push_back('0');
+                } else if (a[posA] == '0' && flag == 1) {
+                    result.push_back('1');
+                    flag = 0;
+                } else {
+                    result.push_back(a[posA]);
+                }
+                posA--;
+            }
+            while (posB >= 0) {
+                if (b[posB] == '1' && flag == 1) {
+                    result.push_back('0');
+                } else if (b[posB] == '0' && flag == 1) {
+                    result.push_back('1');
+                    flag = 0;
+                } else {
+                    result.push_back(b[posB]);
+                }
+                posB--;
+            }
+        if (flag) {
+            result.push_back('1');
+        }
+        reverse(result.begin(), result.end());
+        result[result.size() - 1] = '\0';
+        return result;
+    }
+};
