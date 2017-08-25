@@ -44,8 +44,8 @@ public:
         if (lenA == 0 || lenB == 0) {
             return lenA == 0 ? b : a;
         }
-        int posA = lenA--;
-        int posB = lenB--;
+        int posA = --lenA;
+        int posB = --lenB;
         int flag = 0;
         while (posA >= 0 && posB >= 0) {
             if (a[posA] == '1' && b[posB] == '1') {
@@ -97,7 +97,6 @@ public:
             result.push_back('1');
         }
         reverse(result.begin(), result.end());
-        result[result.size() - 1] = '\0';
         return result;
     }
 };
