@@ -19,17 +19,10 @@ def find_substring_in_wrapround_string(p)
         end
         count[array[i]] = [count[array[i]],maxLen].max
     end
-    
-    for( int i=0;i<p.length();i++ ){
-        if( i>0 && (p_int[i-1] + 1) % 26 == p_int[i]){
-            maxLen ++ ;
-        } else{
-            maxLen = 1;
-        }
-        count[p_int[i]] = Math.max(count[p_int[i]],maxLen);
-    }
-    for( int i=0;i<26;i++)
-        res += count[i];
+
+    for i in 0..26
+        res+= count[i]
+    end
     return res;
 
 end
